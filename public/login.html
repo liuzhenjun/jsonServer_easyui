@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>登录</title>
+		<link rel="stylesheet" type="text/css" href="./lib/jquery-easyui-1.5.5.2/themes/bootstrap/easyui.css">
+		<link rel="stylesheet" type="text/css" href="./lib/jquery-easyui-1.5.5.2/themes/icon.css"/>
+		<script src="lib/jquery-easyui-1.5.5.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="lib/jquery-easyui-1.5.5.2/jquery.easyui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="lib/jquery-easyui-1.5.5.2/locale/easyui-lang-zh_CN.js" type="text/javascript" charset="utf-8"></script>
+		<script src="lib/sha1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="lib/cookie.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			html,body,div,td,table,form{
+				padding: 0;
+				margin: 0;
+			}
+			.login-wrap{
+				width: 300px;
+				height: 200px;
+				border: 1px solid #00BBEE;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				margin-left: -151px;
+				margin-top: -91px;
+			}
+			#ff{
+				padding: 50px;
+			}
+			.btn{
+				width: 100px;
+				height: 30px;
+			}
+			#ff input {
+				margin: 10px 0;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="" class="login-wrap">
+			<form id="ff" method="post">
+			    <div>
+					<label for="name">用户名:</label>
+					<input class="easyui-validatebox easyui-textbox" type="text" name="username" data-options="iconCls:'icon-man',required:true" />
+			    </div>
+			    <div>
+					<label for="password">密码:</label>
+					<input class="easyui-validatebox easyui-passwordbox" type="password" name="userpwd" data-options="required:true" />
+			    </div>
+				<div>
+					<input type="button" name="" class="easyui-linkbutton btn" id="btnLogin" value="登录" />
+				</div>
+			</form>
+		</div>	
+		<script type="text/javascript">
+			$(function(){
+				$('#btnLogin').on('click',function(){
+					//把表单中的数据给拿到
+					var frmDataArr = $('#ff').serializeArray();
+					
+					frmDataArr[1].value = sha1(frmDataArr[1].value);
+					
+					console.log(frmDataArr);
+					if ($('#ff').form('validate')) {
+						$.ajax({
+							url:'/authorized',
+							type:'POST',
+							dataType:'json',
+							data:frmDataArr,
+							success:function(data){
+								if(data.code === 8){
+									$.messager.alert('提示消息','登录失败','warning');
+								} else {
+									//$.messager.alert('提示消息','登录成功','info');
+									Cookies.set('auth_token', data.auth_token, { expires: 7, path: '' });  
+									window.location.href= './admin.html';
+								}
+							}
+						});
+					} else{
+						$.messager.alert('提示消息','请输入规范的用户名和密码','warning');
+					}
+				})
+			})
+		</script>
+
+	</body>
+
+</html>

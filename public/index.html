@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>后台管理系统</title>
+		<link rel="stylesheet" type="text/css" href="./lib/jquery-easyui-1.5.5.2/themes/bootstrap/easyui.css">
+		<link rel="stylesheet" type="text/css" href="./lib/jquery-easyui-1.5.5.2/themes/icon.css"/>
+		<script src="lib/jquery-easyui-1.5.5.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="lib/jquery-easyui-1.5.5.2/jquery.easyui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="lib/jquery-easyui-1.5.5.2/locale/easyui-lang-zh_CN.js" type="text/javascript" charset="utf-8"></script>
+		<script src="lib/cookie.js" type="text/javascript" charset="utf-8"></script>
+		<script src="lib/js/ajaxsetup.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body class="easyui-layout">
+			<!-- 头部 -->
+		    <div data-options="region:'north',split:true" style="height:100px;">
+				<h1>后台管理系统</h1>
+			</div>
+			<!-- 底部 -->
+		    <div data-options="region:'south',split:true" style="height:100px;">
+				<p style="text-align: center;">版权所有。</p>
+			</div>
+			<!-- 中间 -->
+		    <div data-options="region:'east',title:'East',split:true" style="width:100px;">
+				
+			</div>
+			<!-- 导航左边 -->
+		    <div data-options="region:'west',title:'菜单导航',split:true" style="width:100px;">
+				<input type="button" name="" id="btnCloseNav" value="折叠左侧菜单栏" />
+				<input type="button" name="" id="getTable" value="选中table" />
+				<input type="button" name="" id="getCookies" value="获取cookies" />
+			</div>
+			<!-- 内容 -->
+		    <div data-options="region:'center'" style="padding:5px;background:#eee;">
+				<div id="tt" data-options = "fit:true" class="easyui-tabs" style="width:500px;height:250px;">
+				    <div title="用户列表" style="padding:20px;display:none;">
+						
+				    </div>
+				    <div title="Tab2" data-options="closable:true" style="overflow:auto;padding:20px;display:none;">
+						tab2
+				    </div>
+				    <div title="Tab3" data-options="iconCls:'icon-reload',closable:true" style="padding:20px;display:none;">
+						tab3
+				    </div>
+				</div>
+			</div>
+			<script type="text/javascript">
+
+				$(function () {
+					$('#btnCloseNav').on('click',function () {
+						$(document.body).layout('collapse','west');
+					});
+					$('#getTable').on('click',function () {
+						var auth_token = Cookies.get('auth_token');
+						console.log(auth_token)
+					});
+					$('#getCookies').on('click',function () {
+						$.ajax({
+							url:'/api/course?id=1003',
+							data: '',
+							type: 'json',
+							type: 'GET',
+							success:function(data){
+								console.log(data)
+							}
+						});
+					});
+					
+					
+				});
+			</script>
+
+	</body>
+
+</html>

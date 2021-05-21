@@ -1,0 +1,22 @@
+{
+	"burgeon":[
+		{
+			"id":1,
+			"name":"liu",
+			"part":"depart",
+			"sala":"14000"
+		},
+		{
+			"id":3,
+			"name":"he",
+			"part":"depart",
+			"sala":"24000"
+		},
+		{
+			"id":5,
+			"name":"her",
+			"part":"depart",
+			"sala":"27000"
+		}
+	]
+}
